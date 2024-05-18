@@ -10,7 +10,7 @@ import scipy.misc
 import os
 import sys
 from PIL import Image
-# from setup_mnist_model import MNIST
+from setup_mnist_model import MNIST
 # from setup_cifar10_model import CIFAR10
 
 """##L2 Black Box Attack"""
@@ -257,19 +257,19 @@ if __name__=='__main__':
     torch.manual_seed(42)
 
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (1.0,))])
-    # test_set = datasets.MNIST(root = './data', train=False, transform = transform, download=True)
-    test_set = datasets.CIFAR10(root = './data', train=False, transform = transform, download=True)
+    test_set = datasets.MNIST(root = './data', train=False, transform = transform, download=True)
+    # test_set = datasets.CIFAR10(root = './data', train=False, transform = transform, download=True)
     test_loader = torch.utils.data.DataLoader(test_set,batch_size=1,shuffle=True)
 
     use_cuda=True
     device = torch.device("cuda" if (use_cuda and torch.cuda.is_available()) else "cpu")
 
-    # model = MNIST().to(device)
+    model = MNIST().to(device)
     # model = CIFAR10().to(device) 
 
-    # model.load_state_dict(torch.load('./models/mnist_model.pt'))
+    model.load_state_dict(torch.load('./models/mnist_model.pt'))
     # model.load_state_dict(torch.load('./models/cifar10_model.pt'))
-    # model.eval()
+    model.eval()
 
     use_log=True
     use_tanh=True
